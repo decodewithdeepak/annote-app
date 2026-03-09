@@ -33,8 +33,8 @@ export default function AnnotationModal({
   const activeColor = SPEAKER_COLORS[speakerID];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-      <div className="w-96 overflow-hidden rounded-lg border border-white/10 bg-[#12121a] shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 backdrop-blur-sm sm:items-center">
+      <div className="w-full overflow-hidden rounded-t-xl border-x border-t border-white/10 bg-[#12121a] shadow-2xl sm:w-96 sm:rounded-lg sm:border-b">
         {/* Header */}
         <div className="flex items-center justify-between bg-white/[0.03] px-5 py-3 border-b border-white/10">
           <span className="text-xs tracking-[0.3em] text-white/45">
@@ -49,7 +49,7 @@ export default function AnnotationModal({
         </div>
 
         {/* Body */}
-        <div className="flex flex-col gap-3 px-5 py-4">
+        <div className="flex flex-col gap-3 px-5 py-4 pb-8 sm:pb-4">
           <label className="text-xs tracking-[0.3em] text-white/30">
             SPEAKER ID
           </label>
@@ -62,7 +62,7 @@ export default function AnnotationModal({
                 <button
                   key={s}
                   type="button"
-                  className="flex items-center rounded border px-3 py-2 text-xs tracking-wide transition-all"
+                  className="flex cursor-pointer items-center rounded border px-3 py-2 text-xs tracking-wide transition-all hover:scale-[1.02] active:scale-[0.98]"
                   style={{
                     borderColor: active ? col : "rgba(255,255,255,0.1)",
                     color: active ? col : "rgba(255,255,255,0.45)",
@@ -93,27 +93,28 @@ export default function AnnotationModal({
               if (e.key === "Escape") onDiscard();
             }}
             placeholder="Words spoken in this segment..."
-            className="w-full resize-y rounded border border-white/10 bg-white/[0.05] p-3 text-xs leading-relaxed text-[#e8e8e8] outline-none"
-            style={{ minHeight: 78 }}
+            className="w-full resize-none rounded border border-white/10 bg-white/[0.05] p-3 text-sm leading-relaxed text-[#e8e8e8] outline-none sm:resize-y sm:text-xs"
+            style={{ minHeight: 90 }}
           />
 
-          <span className="text-xs text-white/30">
+          <span className="hidden text-xs text-white/30 sm:block">
             ⌘↵ save · Esc discard
           </span>
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end gap-2 border-t border-white/10 px-5 py-3">
+        <div className="flex justify-end gap-2 border-t border-white/10 px-5 py-3 pb-10 sm:pb-3">
           <button
             type="button"
-            className="cursor-pointer rounded border border-white/10 bg-transparent px-4 py-2 text-xs tracking-[0.25em] text-white/40"
+            className="cursor-pointer rounded border border-white/10 bg-transparent px-4 py-2 text-sm tracking-[0.25em] text-white/40 transition-all hover:bg-white/5 hover:text-white/60 active:scale-95 sm:text-xs"
             onClick={onDiscard}
           >
             DISCARD
           </button>
           <button
             type="button"
-            className="cursor-pointer rounded border px-4 py-2 text-xs font-bold tracking-[0.25em]"
+            className="cursor-pointer rounded border px-4 py-2 text-xs font-bold tracking-[0.25em] transition-all hover:brightness-110 active:scale-95 disabled:cursor-not-allowed"
+            disabled={!text.trim()}
             style={{
               borderColor: activeColor,
               color: activeColor,

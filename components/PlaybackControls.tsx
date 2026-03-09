@@ -21,7 +21,7 @@ export default function PlaybackControls({
     <div className="flex items-center gap-3 py-3">
       <button
         type="button"
-        className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-emerald-400/50 bg-emerald-400/10 text-sm text-emerald-400"
+        className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-emerald-400/50 bg-emerald-400/10 text-sm text-emerald-400 transition-all hover:scale-110 hover:bg-emerald-400/20 active:scale-90"
         onClick={onTogglePlay}
       >
         {isPlaying ? "⏸" : "▶"}
@@ -51,7 +51,7 @@ export default function PlaybackControls({
         />
       </div>
 
-      <span className="shrink-0 text-xs text-white/20">
+      <span className="hidden sm:inline shrink-0 text-xs text-white/20">
         DRAG to annotate · click to seek
       </span>
     </div>

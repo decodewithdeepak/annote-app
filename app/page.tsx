@@ -27,6 +27,7 @@ export default function AudioAnnotator() {
   const [segments, setSegments] = useState<Segment[]>([]);
   const [selection, setSelection] = useState<Selection | null>(null);
   const [pendingSel, setPendingSel] = useState<Selection | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [exported, setExported] = useState(false);
   const [playRequested, setPlayRequested] = useState(false);
 
@@ -162,6 +163,8 @@ export default function AudioAnnotator() {
       seekTo(start);
       setSelection(null);
     } else if (segments.some((s) => start < s.endTime && end > s.startTime)) {
+      setErrorMsg("OVERLAP DETECTED");
+      setTimeout(() => setErrorMsg(null), 2000);
       setSelection(null);
     } else {
       stopPlayback();
@@ -194,7 +197,9 @@ export default function AudioAnnotator() {
   }, []);
 
   const handleExport = () => {
-    console.log(JSON.stringify(segments.map(s => ({ ...s, duration: parseFloat((s.endTime - s.startTime).toFixed(3)) })), null, 2));
+    const data = JSON.stringify(segments.map(s => ({ ...s, duration: parseFloat((s.endTime - s.startTime).toFixed(3)) })), null, 2);
+    console.log(data);
+    navigator.clipboard.writeText(data).catch(err => console.error("Copy failed", err));
     setExported(true);
     setTimeout(() => setExported(false), 2000);
   };
@@ -227,6 +232,12 @@ export default function AudioAnnotator() {
         exported={exported}
       />
 
+      {errorMsg && (
+        <div className="fixed top-18 left-1/2 -translate-x-1/2 z-[100] px-4 py-1 bg-red-500/90 text-[10px] tracking-[0.3em] font-bold text-white rounded border border-red-400/50 shadow-2xl backdrop-blur-sm animate-in fade-in slide-in-from-top-2 duration-300">
+          {errorMsg}
+        </div>
+      )}
+
       {!hasAudio && !loading && !loadError && (
         <UploadScreen onFile={handleFile} onSample={handleSample} />
       )}
@@ -252,15 +263,15 @@ export default function AudioAnnotator() {
 
       {hasAudio && (
         <>
-          <section className="px-7 pt-5 shrink-0">
+          <section className="px-4 sm:px-7 pt-5 shrink-0">
             <div className="relative mb-1" style={{ height: 18 }}>
-              {Array.from({ length: 9 }, (_, i) => (
+              {Array.from({ length: 11 }, (_, i) => (
                 <span
                   key={i}
                   className="absolute select-none"
-                  style={{ left: `${(i / 8) * 100}%`, fontSize: 9, color: "rgba(255,255,255,0.22)", transform: "translateX(-50%)" }}
+                  style={{ left: `${(i / 10) * 100}%`, fontSize: 9, color: "rgba(255,255,255,0.22)", transform: "translateX(-50%)" }}
                 >
-                  {formatTime((i / 8) * duration)}
+                  {formatTime((i / 10) * duration)}
                 </span>
               ))}
             </div>
@@ -295,6 +306,8 @@ export default function AudioAnnotator() {
             onDelete={(id) => setSegments((p) => p.filter((s) => s.id !== id))}
             onSeek={seekTo}
             onClearAll={() => setSegments([])}
+            onExport={handleExport}
+            exported={exported}
           />
         </>
       )}

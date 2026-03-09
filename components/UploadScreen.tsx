@@ -19,12 +19,12 @@ export default function UploadScreen({ onFile, onSample }: UploadScreenProps) {
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center p-10">
+    <div className="flex-1 flex items-center justify-center p-4 sm:p-10">
       <div
-        className={`flex cursor-pointer flex-col items-center gap-3 rounded-lg px-20 py-14 text-center transition-all
-        border-[1.5px] border-dashed
+        className={`flex w-full max-w-lg cursor-pointer flex-col items-center gap-3 rounded-lg px-6 py-10 sm:px-20 sm:py-14 text-center transition-all duration-300
+        border-[1.5px] border-dashed hover:border-emerald-400/40 hover:bg-emerald-400/[0.02]
         ${over
-            ? "border-emerald-400/10 bg-emerald-400/5"
+            ? "border-emerald-400/30 bg-emerald-400/10 scale-[1.01]"
             : "border-white/10 bg-white/5"
           }`}
         onDragOver={(e) => {
@@ -46,7 +46,7 @@ export default function UploadScreen({ onFile, onSample }: UploadScreenProps) {
         </span>
 
         <button
-          className="mt-2 rounded border border-emerald-400/50 bg-emerald-400/10 px-7 py-2 text-xs tracking-[0.25em] text-emerald-400"
+          className="cursor-pointer mt-2 rounded border border-emerald-400/50 bg-emerald-400/10 px-7 py-2 text-xs tracking-[0.25em] text-emerald-400 transition-all hover:scale-105 hover:bg-emerald-400/20 active:scale-95"
           onClick={(e) => {
             e.stopPropagation();
             inputRef.current?.click();
@@ -64,7 +64,7 @@ export default function UploadScreen({ onFile, onSample }: UploadScreenProps) {
         />
 
         <span
-          className="mt-1 cursor-pointer text-xs text-white/30 underline underline-offset-4"
+          className="mt-1 cursor-pointer text-xs text-white/30 underline underline-offset-4 transition-colors hover:text-white/60"
           onClick={(e) => {
             e.stopPropagation();
             onSample();

@@ -16,13 +16,13 @@ export default function AppHeader({
   exported,
 }: AppHeaderProps) {
   return (
-    <header className="flex shrink-0 items-center justify-between border-b border-white/10 bg-white/5 px-7 py-3">
+    <header className="flex shrink-0 items-center justify-between border-b border-white/10 bg-white/5 px-4 py-3 sm:px-7">
       <div className="flex items-center gap-3">
         <span className="text-lg text-emerald-400">◈</span>
         <span className="text-xs font-bold tracking-[0.3em] text-white">
           WAVEMARK
         </span>
-        <span className="text-xs tracking-wide text-white/30">
+        <span className="hidden text-xs tracking-wide text-white/30 sm:inline">
           Audio Annotation Studio
         </span>
       </div>
@@ -30,33 +30,15 @@ export default function AppHeader({
       <div className="flex items-center gap-3">
         {hasAudio && (
           <>
-            <span className="max-w-50 truncate text-xs text-white/35">
+            <span className="hidden max-w-50 truncate text-xs text-white/35 md:inline">
               {fileName}
             </span>
             <button
               type="button"
-              className="cursor-pointer rounded border border-white/15 bg-transparent px-3 py-1 text-xs tracking-[0.25em] text-white/40"
+              className="cursor-pointer rounded border border-white/15 bg-transparent px-3 py-1 text-[10px] tracking-[0.25em] text-white/40 transition-all hover:bg-white/5 hover:text-white/60 active:scale-95 sm:text-xs"
               onClick={onReset}
             >
-              CHANGE FILE
-            </button>
-          </>
-        )}
-
-        {segmentCount > 0 && (
-          <>
-            <span className="text-xs tracking-[0.25em] text-white/30">
-              {segmentCount} SEG
-            </span>
-            <button
-              type="button"
-              className={`cursor-pointer rounded border px-4 py-1 text-xs tracking-[0.25em] ${exported
-                ? "border-white/30 text-white/50"
-                : "border-emerald-400/40 text-emerald-400"
-                }`}
-              onClick={onExport}
-            >
-              {exported ? "✓ EXPORTED" : "EXPORT JSON"}
+              CHANGE
             </button>
           </>
         )}

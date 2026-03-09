@@ -42,7 +42,7 @@ export default function WaveformCanvas({
     ctx.clearRect(0, 0, W, H);
 
     // Grid lines
-    ctx.strokeStyle = "rgba(255,255,255,0.04)";
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
     ctx.lineWidth = 1;
     ctx.beginPath();
     for (let i = 0; i <= 10; i++) { ctx.moveTo((i / 10) * W, 0); ctx.lineTo((i / 10) * W, H); }

@@ -12,7 +12,7 @@ export interface Selection {
 }
 
 export const SPEAKER_COLORS: Record<string, string> = {
-  "Speaker A": "#00d4aa",
+  "Speaker A": "#38bdf8",
   "Speaker B": "#ff6b6b",
   "Speaker C": "#ffd93d",
   "Speaker D": "#a78bfa",
@@ -31,7 +31,7 @@ export const generateId = (): string => Math.random().toString(36).slice(2, 9);
 
 export const decodeAudioFile = async (
   file: File,
-  n = 900
+  n = 900,
 ): Promise<{ peaks: number[]; duration: number }> => {
   const arrayBuffer = await file.arrayBuffer();
   const AudioCtx =
