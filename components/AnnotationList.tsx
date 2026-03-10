@@ -1,38 +1,23 @@
-import { Segment } from "@/lib/audio";
+"use client";
+
+import { useAudio } from "@/lib/AudioContext";
 import SegmentRow from "./SegmentRow";
 
-interface AnnotationListProps {
-  segments: Segment[];
-  onDelete: (id: string) => void;
-  onSeek: (t: number) => void;
-  onClearAll: () => void;
-  onExport: () => void;
-  exported: boolean;
-}
-
-export default function AnnotationList({
-  segments,
-  onDelete,
-  onSeek,
-  onClearAll,
-  onExport,
-  exported,
-}: AnnotationListProps) {
+export default function AnnotationList() {
+  const { segments, clearAllSegments, handleExport, exported } = useAudio();
   const hasSegments = segments.length > 0;
 
   return (
     <section className="flex flex-1 flex-col px-4 sm:px-7 pb-7">
       <div className="mb-3 flex items-center justify-between border-b border-white/10 py-3">
-        <span className="text-xs tracking-[0.25em] text-white/35">
-          ANNOTATIONS
-        </span>
+        <span className="text-xs tracking-[0.25em] text-white/35">ANNOTATIONS</span>
         <div className="flex items-center gap-3">
           {hasSegments && (
             <>
               <button
                 type="button"
                 className="cursor-pointer rounded border border-red-400/30 bg-transparent px-2 py-1 text-xs tracking-[0.25em] text-red-400/70 transition-all hover:bg-red-400/10 hover:text-red-400 active:scale-95"
-                onClick={onClearAll}
+                onClick={clearAllSegments}
               >
                 CLEAR ALL
               </button>
@@ -42,7 +27,7 @@ export default function AnnotationList({
                   ? "border-white/30 text-white/50"
                   : "border-emerald-400/40 text-emerald-400 hover:bg-emerald-400/5 hover:border-emerald-400/60"
                   }`}
-                onClick={onExport}
+                onClick={handleExport}
               >
                 <span>{exported ? "✓ COPIED" : "EXPORT"}</span>
                 {!exported && (
@@ -59,20 +44,12 @@ export default function AnnotationList({
       {hasSegments ? (
         <div className="flex flex-col gap-2">
           {segments.map((seg, i) => (
-            <SegmentRow
-              key={seg.id}
-              seg={seg}
-              index={i}
-              onDelete={onDelete}
-              onSeek={onSeek}
-            />
+            <SegmentRow key={seg.id} seg={seg} index={i} />
           ))}
         </div>
       ) : (
         <div className="flex flex-col items-center gap-2 py-12 text-white/20">
-          <span className="text-xs tracking-wide">
-            No annotations yet. Drag across the waveform to mark a segment.
-          </span>
+          <span className="text-xs tracking-wide">No annotations yet. Drag across the waveform to mark a segment.</span>
         </div>
       )}
     </section>

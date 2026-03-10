@@ -42,13 +42,12 @@ export const decodeAudioFile = async (
   const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
   await audioCtx.close();
   const numCh = audioBuffer.numberOfChannels;
-  const len = audioBuffer.length;
-  const mono = new Float32Array(len);
+  const mono = new Float32Array(audioBuffer.length);
   for (let c = 0; c < numCh; c++) {
     const ch = audioBuffer.getChannelData(c);
-    for (let i = 0; i < len; i++) mono[i] += ch[i] / numCh;
+    ch.forEach((val, i) => (mono[i] += val / numCh));
   }
-  const blockSize = Math.floor(len / n);
+  const blockSize = Math.floor(audioBuffer.length / n);
   const peaks = new Array<number>(n);
   let globalMax = 0;
   for (let i = 0; i < n; i++) {

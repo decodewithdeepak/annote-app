@@ -16,7 +16,7 @@ Most annotation tools feel sluggish because they rely on heavy DOM updates. **WA
 - **Fused UI**: A minimalist "fused" export badge that tracks your progress in real-time.
 
 ## Tech Stack
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS 4 (Modern, utility-first)
 - **Audio Logic**: Web Audio API (Manual decoding pipeline)
